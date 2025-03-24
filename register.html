@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - SmartSpend</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* 🌟 Registration Form Styling */
+        .register-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background: #ffffff;
+        }
+
+        .register-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+
+        .register-container form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .register-container label {
+            margin-top: 10px;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        .register-container input,
+        .register-container select {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1em;
+        }
+
+        .register-container button {
+            margin-top: 20px;
+            padding: 12px;
+            background: var(--primary-color, #213555);
+            color: var(--text-light, #fff);
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .register-container button:hover {
+            background: var(--secondary-color, #3E5879);
+        }
+
+        .register-container .form-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .register-container .form-group input {
+            flex: 1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 480px) {
+            .register-container {
+                padding: 20px;
+            }
+
+            .register-container .form-group {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-container">
+        <h2>Complete Your Registration</h2>
+        <form>
+            <!-- Personal Information -->
+            <div class="form-group">
+                <div>
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" placeholder="Enter your first name" required>
+                </div>
+                <div>
+                    <label for="second-name">Second Name</label>
+                    <input type="text" id="second-name" placeholder="Enter your second name" required>
+                </div>
+            </div>
+
+            <label for="birth-date">Date of Birth</label>
+            <input type="date" id="birth-date" required>
+
+            <div class="form-group">
+                <div>
+                    <label for="nationality">Nationality</label>
+                    <input type="text" id="nationality" placeholder="Enter your nationality" required>
+                </div>
+                <div>
+                    <label for="country">Country of Residence</label>
+                    <input type="text" id="country" placeholder="Enter your country" required>
+                </div>
+            </div>
+
+            <label for="postal-code">Postal Code</label>
+            <input type="text" id="postal-code" placeholder="Enter your postal code" required>
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" placeholder="Enter your email" required>
+
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" placeholder="Enter your phone number" required>
+
+            <!-- Bank Information (conditionally displayed) -->
+            <div id="bank-info">
+                <label for="bank-account">Bank Account Number</label>
+                <input type="text" id="bank-account" placeholder="Enter your bank account number">
+            </div>
+
+            <!-- Plan Information (Auto-filled) -->
+            <label for="plan">Selected Plan</label>
+            <input type="text" id="plan" readonly>
+
+            <!-- Submit Button -->
+            <button type="submit">Complete Registration</button>
+        </form>
+    </div>
+
+    <script>
+        // 🌟 Auto-fill Plan Information and Handle Bank Info Visibility
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const plan = urlParams.get('plan') || 'Starter';
+            const planInput = document.getElementById('plan');
+            const bankInfo = document.getElementById('bank-info');
+
+            planInput.value = plan.charAt(0).toUpperCase() + plan.slice(1) + ' Plan';
+
+            // Hide bank account field if plan is "Starter"
+            if (plan.toLowerCase() === 'starter') {
+                bankInfo.classList.add('hidden');
+            } else {
+                bankInfo.classList.remove('hidden');
+            }
+        });
+
+        // 🌟 Form Submission Handling
+        document.querySelector('form').addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            // Collect Form Data
+            const formData = {
+                firstName: document.getElementById('first-name').value,
+                secondName: document.getElementById('second-name').value,
+                birthDate: document.getElementById('birth-date').value,
+                nationality: document.getElementById('nationality').value,
+                country: document.getElementById('country').value,
+                postalCode: document.getElementById('postal-code').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                plan: document.getElementById('plan').value,
+                bankAccount: document.getElementById('bank-account').value || 'N/A'
+            };
+
+            console.log('Form Data Submitted:', formData);
+
+            alert('Registration successful! We will contact you soon.');
+        });
+    </script>
+</body>
+</html>

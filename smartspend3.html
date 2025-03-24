@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSpend – Smarter Financial Choices</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #213555, #3E5879);
+            --secondary-gradient: linear-gradient(135deg, #3E5879, #213555);
+            --beige-light: #F5EFE7;
+            --beige-dark: #D8C4B6;
+            --blue-dark: #213555;
+            --text-light: #ffffff;
+            --text-dark: #213555;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: var(--beige-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--primary-gradient);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 50px;
+            border-radius: 0 0 16px 16px;
+        }
+
+        nav .logo {
+            font-size: 1.8em;
+            font-weight: 700;
+            color: var(--text-light);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            margin: 0;
+        }
+
+        nav ul li a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: var(--beige-dark);
+        }
+
+        /* Hero Section */
+        header {
+            background: var(--primary-gradient);
+            color: var(--text-light);
+            text-align: center;
+            padding: 150px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header h1, header p {
+            color: var(--text-light);
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.75);
+            position: relative;
+            z-index: 2;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(270deg, #213555, #3E5879, #665132, #2b527b);
+            background-size: 800% 800%;
+            animation: wavyGradient 10s ease infinite;
+            z-index: 1;
+        }
+
+        @keyframes wavyGradient {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            25% {
+                background-position: 50% 25%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            75% {
+                background-position: 50% 75%;
+            }
+        }
+
+        .cta-btn {
+            display: inline-block;
+            background: var(--secondary-gradient);
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 14px 30px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.05);
+        }
+
+        /* Key Features Section */
+        .features {
+            background: #F9FAFB;
+            text-align: center;
+            padding: 100px 20px;
+            border-radius: 16px;
+        }
+
+        .features h2 {
+            font-size: 2.8em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .features p {
+            font-size: 1.1em;
+            margin-bottom: 50px;
+            color: #555;
+        }
+
+        .features-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            background: var(--primary-gradient);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            overflow: hidden;
+        }
+
+        .feature-icon img {
+            width: 60%;
+            height: 60%;
+            object-fit: contain;
+        }
+
+        .feature-item h3 {
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .feature-item p {
+            font-size: 1em;
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .feature-item .feature-link {
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--blue-dark);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .feature-item .feature-link:hover {
+            color: var(--beige-dark);
+            text-decoration: underline;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            background: #E6E6FA;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 16px;
+        }
+
+        .testimonials h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .testimonial-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .testimonial-card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            text-align: center;
+            max-width: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial-img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 15px;
+            object-fit: cover;
+        }
+
+        .testimonial-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+
+        .testimonial-age {
+            font-size: 0.9em;
+            color: #888;
+            margin-bottom: 15px;
+        }
+
+        .testimonial-text {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: var(--text-dark);
+        }
+
+        /* About Section */
+        .about {
+            background: var(--beige-dark);
+            padding: 80px 20px;
+            text-align: center;
+            border-radius: 16px;
+        }
+
+        .about-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .about-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .about-card h3 {
+            font-size: 1.3em;
+            margin-bottom: 10px;
+        }
+
+        .about-card p {
+            font-size: 0.9em;
+            line-height: 1.5;
+        }
+
+        .about-card ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .about-card ul li {
+            margin: 5px 0;
+        }
+
+        .about-cta {
+            margin-top: 60px;
+            text-align: center;
+        }
+
+        .about-cta h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .about-cta .cta-btn {
+            display: inline-block;
+            background: var(--secondary-gradient);
+            color: var(--text-light);
+            text-decoration: none;
+            padding: 12px 25px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: background 0.3s ease;
+        }
+
+        .about-cta .cta-btn:hover {
+            background: var(--primary-gradient);
+        }
+
+        /* Meet Our Team Section */
+        .team {
+            background: #FDF7E3;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 16px;
+        }
+
+        .team h2 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+        }
+
+        .team-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        .team-member {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+
+        .team-member img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+
+        .team-member h3 {
+            font-size: 1.3em;
+            margin: 10px 0;
+        }
+
+        .team-member p {
+            font-size: 1em;
+            color: var(--text-dark);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            background: var(--beige-dark);
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 16px;
+        }
+
+        .pricing h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .pricing p {
+            font-size: 1em;
+            margin-bottom: 30px;
+            color: var(--text-dark);
+        }
+
+        .pricing-plans {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 40px;
+        }
+
+        .plan {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .plan:hover {
+            transform: translateY(-10px);
+        }
+
+        .plan h3 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+
+        .plan p {
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            color: var(--text-dark);
+        }
+
+        .plan ul {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+        }
+
+        .plan ul li {
+            margin: 5px 0;
+            font-size: 0.9em;
+        }
+
+        .plan h4 {
+            font-size: 1.2em;
+            margin: 10px 0;
+            font-weight: bold;
+        }
+
+        .plan button {
+            margin-top: 10px;
+            background: var(--secondary-gradient);
+            color: var(--text-light);
+            border: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            font-weight: 600;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .plan button:hover {
+            background: var(--primary-gradient);
+        }
+
+        /* FAQ Section */
+        .faq {
+            background: #F4F5F7;
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 16px;
+        }
+
+        .faq h2 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: #ffffff;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            padding: 15px 20px;
+            font-size: 1.1em;
+            background: var(--beige-dark);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question span {
+            font-size: 1.5em;
+        }
+
+        .faq-answer {
+            display: none;
+            padding: 15px 20px;
+            background: #ffffff;
+            border-top: 1px solid #eee;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active .faq-question span {
+            transform: rotate(45deg);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: #CDEFEF;
+            color: var(--text-dark);
+            text-align: center;
+            padding: 80px 20px;
+            border-radius: 16px;
+        }
+
+        .contact h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .contact p {
+            font-size: 1em;
+            margin-bottom: 30px;
+        }
+
+        .contact-container {
+            display: flex;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .contact-form, .contact-details {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            flex: 1 1 45%;
+            text-align: left;
+        }
+
+        .contact-form h3, .contact-details h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .contact-form form input,
+        .contact-form form textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        .contact-form form button {
+            width: 100%;
+            background: var(--secondary-gradient);
+            color: var(--text-light);
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .contact-form form button:hover {
+            background: var(--primary-gradient);
+        }
+
+        .contact-details p {
+            font-size: 1em;
+            margin: 10px 0;
+            color: #666;
+        }
+
+        .contact-details a {
+            color: var(--blue-dark);
+            text-decoration: underline;
+        }
+
+        .social-links {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .social-links h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 10px 15px;
+            font-size: 1.2em;
+            font-weight: 500;
+            text-decoration: none;
+            color: var(--blue-dark);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--secondary-gradient);
+            transform: scale(1.1);
+        }
+
+        .map {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .map-placeholder {
+            background: #f0f0f0;
+            border: 2px dashed #ccc;
+            border-radius: 12px;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            color: #888;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--blue-dark);
+            color: var(--text-light);
+            text-align: center;
+            padding: 20px;
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">SmartSpend</div>
+        <ul>
+            <li><a href="#features">Key Features</a></li>
+            <li><a href="#testimonials">Testimonials</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#team">Our Team</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#download">Download</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header>
+        <h1>Smart Financial Choices</h1>
+        <p>Empowering smarter budgeting tools</p>
+        <a href="#pricing" class="cta-btn">Get Started</a>
+    </header>
+
+    <!-- Key Features Section -->
+    <section id="features" class="features">
+        <h2>Key Features</h2>
+        <p>Empowering you with innovative tools for smarter financial management.</p>
+        <div class="features-content">
+            <!-- Feature 1: Budgeting Tools Powered by AI Predictions -->
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <img src="ai-icon.png" alt="AI Budgeting">
+                </div>
+                <h3>🤖 AI-Powered Budgeting Tools</h3>
+                <p>
+                    Leverage AI-driven tools to predict future expenses.
+                    Optimize your budget and plan ahead effectively.</p>
+                <a href="#" class="feature-link">Learn More →</a>
+            </div>
+            <!-- Feature 2: Real-Time Alerts -->
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <img src="alert-icon.png" alt="Real-Time Alerts">
+                </div>
+                <h3>🔔 Real-Time Alerts</h3>
+                <p>
+                    Stay updated with instant alerts about unusual spending activities.
+                    Track your financial habits in real-time.</p>
+                <a href="#" class="feature-link">Learn More →</a>
+            </div>
+            <!-- Feature 3: Investment Recommendations -->
+            <div class="feature-item">
+                <div class="feature-icon">
+                    <img src="investment-icon.png" alt="Investment Recommendations">
+                </div>
+                <h3>📈 Personalized Investment Recommendations</h3>
+                <p>
+                    Receive tailored investment advice based on your spending habits and financial goals.
+                    Helps make informed decisions about where to allocate your funds for maximum return.</p>
+                <a href="#" class="feature-link">Learn More →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <h2>User Testimonials</h2>
+        <div class="testimonial-container">
+            <div class="testimonial-card">
+                <img src="user1.jpg" alt="Sarah" class="testimonial-img">
+                <div class="testimonial-name">Sarah Johnson</div>
+                <div class="testimonial-age">Age: 28</div>
+                <p class="testimonial-text">"SmartSpend has revolutionized how I track my daily expenses. The AI tools are incredibly helpful!"</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="user2.jpg" alt="Mike" class="testimonial-img">
+                <div class="testimonial-name">Mike Thompson</div>
+                <div the "testimonial-age">Age: 42</div>
+                <p class="testimonial-text">"I’ve been using SmartSpend for over a year now, and I’ve saved more than I ever thought possible!"</p>
+            </div>
+            <div class="testimonial-card">
+                <img src="user3.jpg" alt="Emily" class="testimonial-img">
+                <div class="testimonial-name">Emily Williams</div>
+                <div class "testimonial-age">Age: 19</div>
+                <p class="testimonial-text">"As a college student, SmartSpend has helped me budget my limited funds wisely!"</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>About SmartSpend</h2>
+        <p>At SmartSpend, we empower individuals and businesses to make smarter financial choices with advanced budgeting tools and real-time insights.</p>
+        <div class="about-content">
+            <!-- Mission Card -->
+            <div class="about-card">
+                <h3>📊 Our Mission</h3>
+                <p>To simplify financial management with innovative tools, ensuring smarter spending and better savings for everyone.</p>
+            </div>
+            <!-- Core Values Card -->
+            <div class="about-card">
+                <h3>🤝 Core Values</h3>
+                <ul>
+                    <li>✅ Transparency</li>
+                    <li>✅ Innovation</li>
+                    <li>✅ Security</li>
+                    <li>✅ User-Centric Design</li>
+                </ul>
+            </div>
+            <!-- Why Choose Us Card -->
+            <div class="about-card">
+                <h3>💼 Why Choose Us?</h3>
+                <p>With advanced analytics, user-friendly tools, and enterprise-level features, SmartSpend is the trusted choice for over 50,000 users worldwide.</p>
+            </div>
+        </div>
+        <div class="about-cta">
+            <h3>Join the SmartSpend Community Today</h3>
+            <a href="#pricing" class="cta-btn">Explore Our Plans</a>
+        </div>
+    </section>
+
+    <!-- Meet Our Team Section -->
+    <section id="team" class="team">
+        <h2>Meet Our Team</h2>
+        <div class="team-container">
+            <div class="team-member">
+                <img src="salma.jpg" alt="Salma El Achquar">
+                <h3>Salma El Achquar</h3>
+                <p>CEO & Co-Founder</p>
+                <p>Passionate about empowering financial freedom through technology.</p>
+            </div>
+            <div class="team-member">
+                <img src="mariam.jpg" alt="Mariam Bouja">
+                <h3>Mariam Bouja</h3>
+                <p>CTO & Co-Founder</p>
+                <p>Leading innovation with a focus on secure and user-friendly solutions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <h2>Pricing Plans</h2>
+        <p>Choose a plan that suits your needs and start making smarter financial decisions today.</p>
+        <div class="pricing-plans">
+            <!-- Starter Plan -->
+            <div class="plan">
+                <h3>🆓 Starter Plan</h3>
+                <p>Perfect for individuals getting started with budgeting.</p>
+                <ul>
+                    <li>✅ Basic Budgeting Tools</li>
+                    <li>✅ Expense Tracking</li>
+                    <li>✅ Monthly Analytics</li>
+                </ul>
+                <h4>Free</h4>
+                <button>Get Started</button>
+            </div>
+            <!-- Pro Plan -->
+            <div class="plan">
+                <h3>💼 Pro Plan</h3>
+                <p>Advanced tools for serious financial management.</p>
+                <ul>
+                    <li>✅ Advanced Analytics</li>
+                    <li>✅ Custom Financial Goals</li>
+                    <li>✅ Multi-Device Sync</li>
+                </ul>
+                <h4>$9.99/month</h4>
+                <button>Subscribe Now</button>
+            </div>
+            <!-- Enterprise Plan -->
+            <div class="plan">
+                <h3>🏢 Enterprise Plan</h3>
+                <p>Comprehensive tools for teams and organizations.</p>
+                <ul>
+                    <li>✅ Team Dashboards</li>
+                    <li>✅ Role-Based Access</li>
+                    <li>✅ Dedicated Support</li>
+                </ul>
+                <h4>$29.99/user/month</h4>
+                <button>Contact Sales</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <h2>Download SmartSpend App</h2>
+        <p>Get the app on your preferred platform and start managing your finances smarter today!</p>
+        <div class="btn-container">
+            <a href="#" class="btn">📱 Download for iOS</a>
+            <a href="#" the "btn">🤖 Download for Android</a>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <h2>Frequently Asked Questions</h2>
+        <div class="faq-container">
+            <!-- Question 1 -->
+            <div class="faq-item">
+                <div class="faq-question">What is SmartSpend? <span>+</span></div>
+                <div the "faq-answer">
+                    SmartSpend is a financial tool designed to help individuals and businesses manage finances efficiently with advanced analytics and real-time insights.
+                </div>
+            </div>
+            <!-- Question 2 -->
+            <div class="faq-item">
+                <div class="faq-question">Is SmartSpend available on mobile devices? <span>+</span></div>
+                <div the "faq-answer">
+                    Yes! SmartSpend is available on both iOS and Android platforms. You can download it from the App Store or Google Play.
+                </div>
+            </div>
+            <!-- Question 3 -->
+            <div class="faq-item">
+                <div class="faq-question">How secure is my data on SmartSpend? <span>+</span></div>
+                <div the "faq-answer">
+                    Your data security is our top priority. We use state-of-the-art encryption protocols to ensure your financial information remains safe.
+                </div>
+            </div>
+            <!-- Question 4 -->
+            <div the "faq-item">
+                <div class="faq-question">Are there any hidden fees? <span>+</span></div>
+                <div the "faq-answer">
+                    No, there are no hidden fees. Our pricing plans are transparent, and you only pay what is shown in your selected plan.
+                </div>
+            </div>
+            <!-- Question 5 -->
+            <div the "faq-item">
+                <div class="faq-question">Can I cancel my subscription anytime? <span>+</span></div>
+                <div the "faq-answer">
+                    Absolutely! You can cancel your subscription at any time from your account settings without any penalties.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>Get in Touch</h2>
+        <p>We’d love to hear from you! Whether you have a question, feedback, or just want to say hello – drop us a message.</p>
+
+        <div class="contact-container">
+            <div class="contact-form">
+                <h3>Send Us a Message</h3>
+                <form>
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+
+            <div class="contact-details">
+                <h3>Our Contact Details</h3>
+                <p>📍 Address: 123 SmartSpend Lane</p>
+                <p>📞 Phone: +1 (234) 567-890</p>
+                <p>📧 Email: <a href="mailto:support@smartspend.com">support@smartspend.com</a></p>
+            </div>
+        </div>
+        <div class="social-links">
+            <h3>Follow Us on Social Media</h3>
+            <a href="https://www.facebook.com/SmartSpend" target="_blank" aria-label="Facebook">📘 Facebook</a>
+            <a href="https://www.instagram.com/SmartSpend" target="_blank" aria-label="Instagram">📸 Instagram</a>
+            <a href="https://www.twitter.com/SmartSpend" target="_blank" aria-label="X (Twitter)">🐦 X (Twitter)</a>
+            <a href="https://www.tiktok.com/@SmartSpend" target="_blank" aria-label="TikTok">🎵 TikTok</a>
+        </div>
+        <div class="map">
+            <h3>Find Us Here</h3>
+            <div class="map-placeholder">📍 Map Placeholder</div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        &copy; 2024 SmartSpend. All Rights Reserved.
+    </footer>
+
+    <!-- JavaScript for FAQ Toggle -->
+    <script>
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                item.parentElement.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>

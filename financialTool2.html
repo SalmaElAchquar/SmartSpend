@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSpend – Advanced & Interactive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        :root {
+            --primary-color: #213555;
+            --secondary-color: #3E5879;
+            --accent-color: #D8C4B6;
+            --background-light: #F5EFE7;
+            --text-light: #ffffff;
+            --text-dark: #213555;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            background: var(--background-light);
+            color: var(--text-dark);
+        }
+
+        header {
+            text-align: center;
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #213555, #3B82F6);
+            color: var(--text-light);
+        }
+
+        header h1 {
+            font-size: 3rem;
+        }
+
+        header p {
+            font-size: 1.5rem;
+            margin-top: 20px;
+        }
+
+        .tool-container {
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .tool-container h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .chart-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .slider-container {
+            max-width: 600px;
+            margin: 40px auto;
+        }
+
+        .slider-container input {
+            width: 100%;
+        }
+
+        .slider-value {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: var(--primary-color);
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>SmartSpend</h1>
+        <p>Empower your financial journey with interactive tools</p>
+    </header>
+
+    <section class="tool-container">
+        <h2>Interactive Savings Projection</h2>
+        <p>Adjust the parameters below to see how your savings grow over time.</p>
+
+        <div class="slider-container">
+            <label for="monthlySavings">Monthly Savings ($):</label>
+            <input type="range" id="monthlySavings" min="100" max="2000" step="50" value="500">
+            <div class="slider-value" id="monthlySavingsValue">$500</div>
+
+            <label for="interestRate">Annual Interest Rate (%):</label>
+            <input type="range" id="interestRate" min="1" max="10" step="0.1" value="5">
+            <div class="slider-value" id="interestRateValue">5%</div>
+
+            <label for="duration">Duration (Years):</label>
+            <input type="range" id="duration" min="1" max="30" step="1" value="10">
+            <div class="slider-value" id="durationValue">10 years</div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="savingsChart"></canvas>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 SmartSpend. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const savingsChart = document.getElementById('savingsChart').getContext('2d');
+
+        const chart = new Chart(savingsChart, {
+            type: 'line',
+            data: {
+                labels: [],
+                datasets: [{
+                    label: 'Savings Over Time',
+                    data: [],
+                    backgroundColor: 'rgba(33, 53, 85, 0.2)',
+                    borderColor: 'rgba(33, 53, 85, 1)',
+                    borderWidth: 2,
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                return `$${context.raw.toLocaleString()}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Years',
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Total Savings ($)',
+                        }
+                    }
+                }
+            }
+        });
+
+        const monthlySavingsInput = document.getElementById('monthlySavings');
+        const interestRateInput = document.getElementById('interestRate');
+        const durationInput = document.getElementById('duration');
+
+        const monthlySavingsValue = document.getElementById('monthlySavingsValue');
+        const interestRateValue = document.getElementById('interestRateValue');
+        const durationValue = document.getElementById('durationValue');
+
+        function calculateSavings(monthlySavings, interestRate, duration) {
+            const data = [];
+            let total = 0;
+            for (let i = 1; i <= duration; i++) {
+                total += monthlySavings * 12;
+                total += total * (interestRate / 100);
+                data.push(total);
+            }
+            return data;
+        }
+
+        function updateChart() {
+            const monthlySavings = parseInt(monthlySavingsInput.value, 10);
+            const interestRate = parseFloat(interestRateInput.value);
+            const duration = parseInt(durationInput.value, 10);
+
+            monthlySavingsValue.textContent = `$${monthlySavings}`;
+            interestRateValue.textContent = `${interestRate}%`;
+            durationValue.textContent = `${duration} years`;
+
+            const data = calculateSavings(monthlySavings, interestRate, duration);
+            chart.data.labels = Array.from({ length: duration }, (_, i) => i + 1);
+            chart.data.datasets[0].data = data;
+            chart.update();
+        }
+
+        monthlySavingsInput.addEventListener('input', updateChart);
+        interestRateInput.addEventListener('input', updateChart);
+        durationInput.addEventListener('input', updateChart);
+
+        // Initialize the chart with default values
+        updateChart();
+    </script>
+</body>
+</html>

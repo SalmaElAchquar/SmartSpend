@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Financial Tools</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #213555;
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #213555;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #3E5879;
+        }
+
+        .notification {
+            display: none;
+            background: #ffeded;
+            color: #b50000;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .dark-mode {
+            background-color: #1e1e2f;
+            color: #f0f0f0;
+        }
+
+        .dark-mode .card {
+            background: #2a2a3e;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .dark-mode input {
+            background: #333;
+            color: #fff;
+        }
+
+        .dark-mode button {
+            background: #3E5879;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Advanced Financial Tools</h1>
+        <button onclick="toggleDarkMode()">Toggle Dark Mode</button>
+    </header>
+
+    <div class="container">
+        <!-- Notification Placeholder -->
+        <div id="notification" class="notification"></div>
+
+        <!-- Financial Goal Calculator -->
+        <div class="card">
+            <h2>📈 Financial Goal Calculator</h2>
+            <form id="goalCalculator">
+                <div class="form-group">
+                    <label for="goalAmount">Goal Amount ($):</label>
+                    <input type="number" id="goalAmount" placeholder="Enter your goal amount" required>
+                </div>
+                <div class="form-group">
+                    <label for="monthlySavings">Monthly Savings ($):</label>
+                    <input type="number" id="monthlySavings" placeholder="Enter your monthly savings" required>
+                </div>
+                <div class="form-group">
+                    <label for="monthlyExpenses">Monthly Expenses ($):</label>
+                    <input type="number" id="monthlyExpenses" placeholder="Enter your monthly expenses" required>
+                </div>
+                <button type="button" onclick="calculateGoal()">Calculate Time to Achieve Goal</button>
+            </form>
+            <p id="goalResult" style="margin-top: 10px; font-weight: bold;"></p>
+        </div>
+
+        <!-- Savings Growth Chart -->
+        <div class="card">
+            <h2>💰 Savings Growth Over Time</h2>
+            <div class="chart-container">
+                <canvas id="savingsChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Toggle Dark Mode
+        const toggleDarkMode = () => {
+            document.body.classList.toggle('dark-mode');
+        };
+
+        // Financial Goal Calculator with Alerts
+        const calculateGoal = () => {
+            const goalAmount = parseFloat(document.getElementById('goalAmount').value);
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value);
+            const monthlyExpenses = parseFloat(document.getElementById('monthlyExpenses').value);
+            const notificationElement = document.getElementById('notification');
+
+            if (goalAmount && monthlySavings && monthlyExpenses) {
+                const netSavings = monthlySavings - monthlyExpenses;
+                if (netSavings > 0) {
+                    const months = Math.ceil(goalAmount / netSavings);
+                    document.getElementById('goalResult').textContent =
+                        `You will achieve your goal in approximately ${months} months.`;
+
+                    if (months <= 3) {
+                        sendNotification('🎉 You are close to achieving your goal! Just a few more months to go!');
+                    }
+                } else {
+                    document.getElementById('goalResult').textContent =
+                        'Your expenses exceed your savings. Please adjust your budget.';
+                    sendNotification('⚠️ Your expenses exceed your savings! Please review your budget.', true);
+                }
+            } else {
+                alert('Please fill out all fields!');
+            }
+        };
+
+        // Send Notifications
+        const sendNotification = (message, isError = false) => {
+            const notificationElement = document.getElementById('notification');
+            notificationElement.textContent = message;
+            notificationElement.style.display = 'block';
+            notificationElement.style.backgroundColor = isError ? '#ffeded' : '#edfff4';
+            notificationElement.style.color = isError ? '#b50000' : '#006400';
+
+            if (Notification.permission === 'granted') {
+                new Notification(message);
+            } else if (Notification.permission === 'default') {
+                Notification.requestPermission().then((permission) => {
+                    if (permission === 'granted') {
+                        new Notification(message);
+                    }
+                });
+            }
+
+            setTimeout(() => {
+                notificationElement.style.display = 'none';
+            }, 5000);
+        };
+
+        // Savings Growth Chart
+        const savingsChartCtx = document.getElementById('savingsChart').getContext('2d');
+        const savingsChart = new Chart(savingsChartCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Savings Growth ($)',
+                    data: [500, 1000, 1500, 2000, 2500, 3000],
+                    borderColor: '#3E5879',
+                    backgroundColor: 'rgba(62, 88, 121, 0.2)',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: true },
+                    tooltip: { enabled: true }
+                }
+            }
+        });
+
+        // Request Notification Permission on Load
+        window.onload = () => {
+            if (Notification.permission !== 'granted') {
+                Notification.requestPermission();
+            }
+        };
+    </script>
+</body>
+</html>

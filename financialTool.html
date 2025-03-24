@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartSpend – Financial Tools</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* General Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+            color: #333;
+        }
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+            color: #213555;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background: #213555;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #3e5879;
+        }
+        canvas {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h2>Financial Tools</h2>
+
+    <!-- Savings Calculator -->
+    <div class="container" id="savings-calculator">
+        <h3>Savings Calculator</h3>
+        <div class="form-group">
+            <label for="initialAmount">Initial Amount ($)</label>
+            <input type="number" id="initialAmount" placeholder="Enter initial amount">
+        </div>
+        <div class="form-group">
+            <label for="monthlySavings">Monthly Savings ($)</label>
+            <input type="number" id="monthlySavings" placeholder="Enter monthly savings">
+        </div>
+        <div class="form-group">
+            <label for="interestRate">Annual Interest Rate (%)</label>
+            <input type="number" id="interestRate" placeholder="Enter interest rate">
+        </div>
+        <div class="form-group">
+            <label for="years">Number of Years</label>
+            <input type="number" id="years" placeholder="Enter number of years">
+        </div>
+        <button onclick="calculateSavings()">Calculate Savings</button>
+        <p id="result" style="margin-top: 15px; font-weight: bold;"></p>
+    </div>
+
+    <!-- Financial Data Visualization -->
+    <div class="container" id="financial-chart">
+        <h3>Financial Data Visualization</h3>
+        <canvas id="financialChart"></canvas>
+    </div>
+
+    <script>
+        // Savings Calculator Function
+        function calculateSavings() {
+            const initialAmount = parseFloat(document.getElementById('initialAmount').value);
+            const monthlySavings = parseFloat(document.getElementById('monthlySavings').value);
+            const interestRate = parseFloat(document.getElementById('interestRate').value) / 100;
+            const years = parseInt(document.getElementById('years').value);
+
+            if (isNaN(initialAmount) || isNaN(monthlySavings) || isNaN(interestRate) || isNaN(years)) {
+                document.getElementById('result').textContent = "Please enter valid values in all fields.";
+                return;
+            }
+
+            let totalSavings = initialAmount;
+            for (let i = 1; i <= years * 12; i++) {
+                totalSavings += monthlySavings;
+                totalSavings += totalSavings * (interestRate / 12);
+            }
+
+            document.getElementById('result').textContent = `Your total savings after ${years} years will be $${totalSavings.toFixed(2)}.`;
+        }
+
+        // Financial Chart Data
+        const ctx = document.getElementById('financialChart').getContext('2d');
+        const financialChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['January', 'February', 'March', 'April', 'May', 'June'],
+                datasets: [
+                    {
+                        label: 'Spending ($)',
+                        data: [500, 700, 650, 800, 750, 600],
+                        borderColor: '#213555',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    },
+                    {
+                        label: 'Savings ($)',
+                        data: [300, 400, 450, 500, 550, 600],
+                        borderColor: '#3e5879',
+                        borderWidth: 2,
+                        fill: false,
+                        tension: 0.4
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top'
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Months'
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Amount ($)'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
